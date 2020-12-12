@@ -1,5 +1,6 @@
 import React, { useContext, createContext } from "react";
 import { useLocalStorage } from "./use-localstorage";
+import UserAPI from "./../apis/UserAPI.js";
 
 const authContext = createContext();
 
@@ -13,14 +14,23 @@ export const useAuth = () => {
 };
 
 function useProvideAuth() {
-  const [user, setUser] = useLocalStorage("token", "user");
+  const [user, setUser] = useLocalStorage("token", "null");
 
-  const signin = (username, password) => {
-    setUser("user");
+  const signin = async (username, password) => {
+    console.log(username);
+    const res = await UserAPI.signin(username, password);
+    console.log(res.data);
+    if (res.data === true) {
+      setUser(username);
+    }
   };
 
-  const signup = (username, password) => {
-    setUser("user");
+  const signup = async (username, password) => {
+    const res = await UserAPI.signup(username, password);
+    console.log("sign up", res.data);
+    if (res.data === true) {
+      setUser(username);
+    }
   };
 
   const signout = () => {

@@ -28,11 +28,22 @@ const validateMessages = {
   },
 };
 
-const onFinish = (values) => {
-  console.log(values);
-};
-
-export default function PostPage() {
+export default function PostPage({ history }) {
+  const onFinish = async (values) => {
+    console.log(values);
+    const result = await PostAPI.create({
+      name: values.name,
+      price: Number.parseInt(values.price),
+      image: values.image
+        ? values.image
+        : "https://cdn.chotot.com/Z0YjNTz2DE5T7-Yvls848ArfNIki0tkp3AMwEvYEANc/preset:view/plain/2fba49d1e0c01b9c142e841ab15a4168-2697050452033035915.jpg",
+      content: values.introduction,
+    });
+    console.log(result.data);
+    if (result.data === true) {
+      history.push("/");
+    }
+  };
   return (
     <Layout>
       <Header />
@@ -61,19 +72,13 @@ export default function PostPage() {
               >
                 <Input />
               </Form.Item>
+
               <Form.Item
                 name={"price"}
                 label="Giá bán"
                 rules={[{ type: "number", min: 0, max: 100000000 }]}
               >
                 <InputNumber />
-              </Form.Item>
-              <Form.Item
-                name={"type"}
-                label="Loại bài viết"
-                rules={[{ required: true, message: "Missing area" }]}
-              >
-                <Select options={types} />
               </Form.Item>
 
               <Form.Item
@@ -90,7 +95,6 @@ export default function PostPage() {
                 <Button type="primary" htmlType="submit">
                   Xác nhận
                 </Button>
-                <Button style={{ margin: "0 8px" }}>Xoá</Button>
               </Form.Item>
             </Form>
           </Col>

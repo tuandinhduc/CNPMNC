@@ -13,10 +13,12 @@ export default function Router() {
         <Route path={`/posts/:postId`} component={Detail} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/post" component={PostPage} />
 
-        {user == "user" ? (
-          <Route path="/user" component={User} />
+        {user !== "null" ? (
+          <div>
+            <Route path="/post" component={PostPage} />
+            <Route path="/user" component={User} />
+          </div>
         ) : (
           <Redirect to="/" />
         )}

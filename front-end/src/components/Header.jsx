@@ -37,7 +37,7 @@ function Header({ history }) {
           >
             <Link style={{ color: "white" }} to="/">
               <HomeOutlined style={{ marginRight: "15px" }} />
-              Student Accomodation
+              Student Accommodation
             </Link>
           </Typography>
           {user !== "null" ? (

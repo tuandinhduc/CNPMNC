@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PostAPI from "../apis/PostAPI";
-import { List, Avatar, Space } from "antd";
+import { List, Avatar, Space, Image } from "antd";
 import { StarOutlined } from "@ant-design/icons";
-import { Layout, Row, Col, Divider } from "antd";
+import { Layout, Row, Col, Divider, Carousel } from "antd";
 const { Content } = Layout;
 import Header from "./../components/Header";
 import Footer from "./../components/Footer";
@@ -89,8 +89,43 @@ export default function Home() {
     <>
       <Layout>
         <Header />
-        <Content style={{ marginTop: "50px" }}>
-          <Row>
+        <Content>
+          <Carousel autoplay>
+            <div>
+              <div style={{ height: 320, textAlign: "center" }}>
+                <Image
+                  style={{ margin: "auto" }}
+                  src="https://afamilycdn.com/zoom/480_300/150157425591193600/2020/5/5/05-15886563727991939101438-0-0-937-1500-crop-1588656901339381835807.jpg"
+                />
+              </div>
+            </div>
+            <div>
+              <div style={{ height: 320, textAlign: "center" }}>
+                <Image
+                  style={{ margin: "auto" }}
+                  src="https://batdongsanhungthinh.com.vn/wp-content/uploads/2020/10/hinh-anh-can-ho-chung-cu-cao-cap-660x330.jpg"
+                />
+              </div>
+            </div>
+            <div>
+              <div style={{ height: 320, textAlign: "center" }}>
+                <Image
+                  style={{ margin: "auto" }}
+                  src="https://nhadatnhanh.vn/upload/news/nha-tro-cao-cap.jpg"
+                />
+              </div>
+            </div>
+            <div>
+              <div style={{ height: 320, textAlign: "center" }}>
+                <Image
+                  style={{ margin: "auto" }}
+                  src="https://hangngay.org/images/thue-nha-tro2.jpg"
+                />
+              </div>
+            </div>
+          </Carousel>
+
+          <Row style={{ marginTop: 30 }}>
             <Col span={12} offset={6}>
               <List
                 itemLayout="vertical"
@@ -153,3 +188,11 @@ export default function Home() {
     </>
   );
 }
+
+const contentStyle = {
+  height: "320px",
+  color: "#fff",
+  lineHeight: "320px",
+  textAlign: "center",
+  background: "#364d79",
+};

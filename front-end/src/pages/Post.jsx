@@ -1,11 +1,11 @@
-import { Form, Input, Button, Checkbox, InputNumber } from "antd";
-import { Upload, Menu, Row, Col, Layout, Select } from "antd";
+import { Form, Input, Button, InputNumber } from "antd";
+import { Row, Col, Layout, Select } from "antd";
 import React from "react";
-import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
 import Header from "./../components/Header";
 import { Typography } from "antd";
 const { Title } = Typography;
 const { Footer, Content } = Layout;
+import PostAPI from "./../apis/PostAPI";
 
 const layout = {
   labelCol: { span: 8 },
@@ -32,14 +32,6 @@ const onFinish = (values) => {
   console.log(values);
 };
 
-const normFile = (e) => {
-  console.log("Upload event:", e);
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e && e.fileList;
-};
-
 export default function PostPage() {
   return (
     <Layout>
@@ -53,7 +45,7 @@ export default function PostPage() {
           padding: "30px",
         }}
       >
-        <Title level={2}>Post New Room</Title>
+        <Title level={2}>Create Post</Title>
         <Row>
           <Col span={12} offset={4}>
             <Form
@@ -63,39 +55,35 @@ export default function PostPage() {
               validateMessages={validateMessages}
             >
               <Form.Item
-                name={["user", "name"]}
+                name={"name"}
                 label="Tiêu đề"
                 rules={[{ required: true }]}
               >
                 <Input />
               </Form.Item>
               <Form.Item
-                name={["user", "price"]}
+                name={"price"}
                 label="Giá bán"
                 rules={[{ type: "number", min: 0, max: 100000000 }]}
               >
                 <InputNumber />
               </Form.Item>
               <Form.Item
-                name={["user", "type"]}
+                name={"type"}
                 label="Loại bài viết"
                 rules={[{ required: true, message: "Missing area" }]}
               >
                 <Select options={types} />
               </Form.Item>
-              <Form.Item
-                name="upload"
-                label="Ảnh"
-                valuePropName="fileList"
-                getValueFromEvent={normFile}
-                extra="Ảnh liên quan"
-              >
-                <Upload name="logo" action="/upload.do" listType="picture">
-                  <Button icon={<UploadOutlined />}>Chọn để tải lên</Button>
-                </Upload>
-              </Form.Item>
 
-              <Form.Item name={["user", "introduction"]} label="Giới thiệu">
+              <Form.Item
+                name={"image"}
+                label="Link ảnh"
+                rules={[{ required: false }]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item name={"introduction"} label="Giới thiệu">
                 <Input.TextArea />
               </Form.Item>
               <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

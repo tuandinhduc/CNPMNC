@@ -1,11 +1,77 @@
-import React, { useState } from "react";
-import { Typography, Image } from "antd";
+import React, { useState, useEffect } from "react";
+import {
+  Typography,
+  Image,
+  Comment,
+  Avatar,
+  Divider,
+  Form,
+  Button,
+  Input,
+} from "antd";
 const { Title, Text } = Typography;
+const { TextArea } = Input;
+
 import Header from "./../components/Header";
 import Footer from "./../components/Footer";
+import { useAuth } from "../hooks/use-auth";
 
 export default function Detail() {
   const [post, setPost] = useState();
+  const [listComment, setListComment] = useState([]);
+  const [commentDetail, setCommentDetail] = useState("");
+  const { user } = useAuth();
+
+  const submitComment = (value) => {
+    console.log(user);
+    setListComment((p) =>
+      p.concat({ username: user.username ? "dask" : "", detail: value.comment })
+    );
+  };
+
+  useEffect(() => {
+    console.log(commentDetail);
+  }, [commentDetail]);
+
+  const Editor = () => (
+    <Form onFinish={submitComment}>
+      <Form.Item name="comment">
+        <Input rows={4} />
+      </Form.Item>
+      <Form.Item>
+        <Button htmlType="submit" type="primary">
+          Add Comment
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+
+  const CommentSection = ({ listComments }) => {
+    return (
+      <div>
+        {listComments.map((e, i) => {
+          return (
+            <Comment
+              key={i}
+              author={<a>{e.username}</a>}
+              avatar={
+                <Avatar
+                  src="https://www.gravatar.com/avatar/23100?d=identicon"
+                  alt="Han Solo"
+                />
+              }
+              content={<p>{e.detail}</p>}
+            />
+          );
+        })}
+        <Editor
+          onChange={(e) => setCommentDetail(e.target.value)}
+          onSubmit={submitComment}
+          value={commentDetail}
+        />
+      </div>
+    );
+  };
 
   return (
     <div style={{ backgroundColor: "#f4f4f4" }}>
@@ -46,6 +112,11 @@ export default function Detail() {
           pháp lý rõ ràng như vậy. Hãy liên hệ trực tiếp cho tôi để được xem nhà
           và thông tin giấy tờ. Trân trọng.
         </div>
+        <Divider />
+        <Text level={2} strong>
+          Comments
+        </Text>
+        <CommentSection listComments={listComment} />
       </div>
       <Footer />
     </div>

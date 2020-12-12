@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useAuth } from "./../hooks/use-auth";
-import PeopleAPI from "../apis/postAPI";
+import PostAPI from "../apis/PostAPI";
 import { List, Avatar, Space } from "antd";
 import { MessageOutlined, LikeOutlined, StarOutlined } from "@ant-design/icons";
 import { Layout, Row, Col, Divider } from "antd";
@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   useEffect(() => {
-    PeopleAPI.get();
+    PostAPI.getAll().then((s) => console.log(s.data));
   }, []);
   const { setUser } = useAuth();
 
@@ -24,6 +24,7 @@ export default function Home() {
         "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
       description: "20 mét vuông 5PN",
       content: "15 triệu/tháng",
+      type: Math.random() > 0.5 ? "find" : "for-lease",
     });
   }
 
@@ -85,9 +86,11 @@ export default function Home() {
                       <List.Item.Meta
                         avatar={<Avatar src={item.avatar} />}
                         title={item.title}
-                        description={item.description}
+                        description={
+                          item.type === "find" ? "Tìm Phòng" : "Cho Thuê"
+                        }
                       />
-                      {item.content}
+                      {item.description}
                     </List.Item>
                     <Divider />
                   </Link>

@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { useAuth } from "./../hooks/use-auth";
 import { withRouter } from "react-router-dom";
+import { HomeOutlined } from "@ant-design/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,19 +36,32 @@ function Header({ history }) {
             className={classes.title}
           >
             <Link style={{ color: "white" }} to="/">
-              Student Accomodation
+              <HomeOutlined style={{ marginRight: "15px" }} />
+              Student Accommodation
             </Link>
           </Typography>
-          {user == "user" ? (
-            <Button
-              color="inherit"
-              onClick={() => {
-                signout();
-                history.push("/login");
-              }}
-            >
-              Logout
-            </Button>
+          {user !== "null" ? (
+            <>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  history.push("/post");
+                }}
+              >
+                New Post
+              </Button>
+
+              <Button color="inherit">{user}</Button>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  signout();
+                  history.push("/login");
+                }}
+              >
+                Logout
+              </Button>
+            </>
           ) : (
             <>
               <Button color="inherit">

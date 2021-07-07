@@ -22,7 +22,7 @@ export default function Login({ history }) {
   const { signin } = useAuth();
   const onFinish = (values) => {
     console.log("Success:", values);
-    signin();
+    signin(values.username, values.password);
     history.push("/");
   };
 
